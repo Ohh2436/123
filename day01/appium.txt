@@ -1,0 +1,107 @@
+JDK Java Development Kit —— Java开发工具箱
+    放在D盘自己建一个文件夹
+
+    配置JDK：(点开环境变量，点击新建)
+    添加环境变量
+    变量名：TAVA——HOME   变量值：D:\app\jdk1.8.0_144(路径)
+    配置path
+    path： %JAVA_HOME%\jre\bin;%JAVA_HOME%\bin
+    测试环境，在命令行下输入：
+    java -version
+
+Android SDK Android Software Development Kit —— Android软件开发工具包
+    放在C盘根目录下,解压到当前文件后，打开android-sdk-windows，双击SDK Manager
+    添加环境变量：
+    ANDROID_HOME: C:\android-sdk-windows
+    配置Path
+    PATH: %ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools
+
+测试环境，在命令行下输入：
+    adb
+
+安装夜神模拟器
+    设置夜神模拟器为手机模式，分辨率为720*1280
+    使用platform-tools下的abd.exe 文件替换 nox/bin目录下的nox_adb.exe
+    进入开发者模式，选中"USB调试"和"允许模拟位置"
+
+使用adb命令
+
+    adb命令有2种运行方式
+        1.进入Linux命令行
+        adb shell
+
+        发送1000条伪随机事件
+        monkey 1000
+
+        2.不进入Linux命令行
+        adb shell monkey 1000
+
+    使用所有app的包名
+    adb shell pm list packages
+
+    获取当前正在运行的app的包名
+    adb shell dumpsys | find "mFocusedActivity"
+
+    将反编译命令aapt的路径添加到环境变量中
+    %ANDROID_HOME%\build-tools\29.0.3
+
+    运行反编译命令，获取指定apk的包名
+    aapt dump badging d:\baiduwenku_6520.apk
+
+    安装apk
+    adb install d:\baiduwenku_6520.apk
+
+    卸载apk
+    abd uninstall com.baidu.wenku
+
+    -p 向指定的app发送伪随机事件
+    adb shell monkey -p com.android.browser 100
+
+    -v 输出日志 -v越多，输出的日志越详细
+    adb shell monkey -p com.android.browser -v 100
+    adb shell monkey -p com.android.browser -v -v 100
+    adb shell monkey -p com.android.browser -v -v -v 100
+    获取随机事件时日志：
+        伪随机事件可以重复发生
+        seed：种子，这一组伪随机事件编号  count：时间次数  injected:已经通过数量
+        Event percentages:事件百分比，共有11种，百分比是固定的
+
+    > 输出重定向--覆盖  100指伪随机事件100次：
+    adb shell monkey -p com.android.browser -v 100 > d:\monkey.log
+    >> 输出重定向--追加：
+    adb shell monkey -p com.android.browser -v 100 >> d:\monkey.log
+    降低伪随机事件标准：间隔时间
+    --throttle 指定事件间隔
+    adb shell monkey -p com.mt.mtxx.mtxx
+    
+    -s 指定伪随机事件的seed值
+    adb shell monkey -p com.mt.mtxx.mtxx -s 1608618607933 -v -v -v 1000 > d:\monkey.log
+
+    --pct-touch 指定触摸事件的百分比
+    adb shell monkey -p com.mt.mtxx.mtxx -v -v -v --pct-touch 50 1000 > d:\monkey.log
+
+安装Appium
+    使用默认安装就可以
+
+安装nodejs
+    安装到C或D盘根目录下
+    配置Path，将nodejs安装路径添加到环境变量PATH中
+
+安装Appium-doctor
+    进入nodejs安装目录，运行下面命令
+    npm install appium-doctor
+
+运行appium-doctor
+    C:\nodejs\node_modules\.bin>appium-doct
+
+获取appActivity的值
+    运行
+    aapt dump badging d:\baiduwenku_6520.apk
+
+    在结果中查找下面的信息，name的值就是我们需要的appActivity:
+    launchable-activity: name='com.baidu.wenku.splash.view.activity.WelcomeActivity'
+
+安装Appium-python-client
+    pip install appium-python-client
+
+
